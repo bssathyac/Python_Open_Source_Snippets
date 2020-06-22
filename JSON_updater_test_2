@@ -1,0 +1,48 @@
+# importing the module 
+import json 
+
+path = "Y:\\codegen\\Tools\\Translations\\settings.json"
+#path = "Y:\\codegen\\Tools\\Translations\\new_settings.json"
+JSON_DUMP = [] #list for tsln to json
+TSLNS_DUMP = []
+
+
+# Opening JSON file 
+with open(path) as json_file: 
+    data = json.load(json_file) 
+  
+    # Print the type of data variable 
+    print("Type:", type(data))
+
+    translations_list_of_dict = data['translations']
+    no_of_translations = len(translations_list_of_dict)
+    print(no_of_translations) #1883
+    for translation in range(0,1,1):
+        #print(data['translations'][translation])
+        transl_dict = data['translations'][translation]
+        if 'source' in transl_dict:
+            source_sub_dict = transl_dict['source']
+            #print("source = ")
+            #print(source_sub_dict)
+            if 'settings' in transl_dict:
+                settings_sub_dic = transl_dict['settings']
+                #print(data['translations'][translation]['settings'])
+                data['translations'][translation]['settings'].update({'manual-update' : source_sub_dict})
+                data['translations'][translation]['settings'].update({'manual-use-default' : "true"})
+                #print("updated settings tag:")
+                #print(data['translations'][translation]['settings'])
+                #print('JSON', json.dumps(data['translations'][translation]['settings'],indent = 4))
+                print('JSON', json.dumps(data,indent = 4))
+                
+            else:
+                b=3
+                #print("for trnslation {}".format(translation))
+                #print("settings key not found, Need to create one")
+        else:
+            b=6
+            #print("trnslation {}".format(translation))
+            #print("is already manually updated")
+
+  
+    # Print the data of dictionary 
+    print()
